@@ -12,6 +12,7 @@ import {
   Button,
   TableFooter,
 } from "@material-ui/core";
+import { useSelector } from 'react-redux';
 
 
 
@@ -25,8 +26,8 @@ const RightSideBar = () => {
         },
         header: {
           backgroundColor: "#1976d2",
-          color: "#fff",
-          padding: "20px",
+          color: "#ff423",
+          padding: "5px",
         },
         main: {
           flex: "1",
@@ -34,12 +35,6 @@ const RightSideBar = () => {
         },
         table: {
           minWidth: 650,
-        },
-        footer: {
-          backgroundColor: "#1976d2",
-          color: "#fff",
-          padding: "20px",
-          marginTop: "auto",
         },
         checkoutButton: {
           marginTop: "20px",
@@ -49,10 +44,14 @@ const RightSideBar = () => {
   const classes = useStyles();
 
 
+  const allProducts = useSelector((state)=>state.addItem)
+
+  console.log(allProducts,"allproducts")
+
   return (
     <div className={classes.root}>
       <header className={classes.header}>
-        <h1>Shopping Cart</h1>
+        <h1> Check out your Cart</h1>
       </header>
       <main className={classes.main}>
         <TableContainer component={Paper}>
@@ -66,18 +65,22 @@ const RightSideBar = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {/* Replace with a loop to generate a row for each item in the cart */}
-              <TableRow>
-                <TableCell>Product name</TableCell>
-                <TableCell align="right">$XX.XX</TableCell>
-                <TableCell align="right">Quantity</TableCell>
-                <TableCell align="right">$XX.XX</TableCell>
+              {allProducts.map((product)=>{
+                return (
+                <TableRow>
+                <TableCell>{product.title}</TableCell>
+                <TableCell align="right">${product.price}</TableCell>
+                <TableCell align="right">{product.qty}</TableCell>
+                <TableCell align="right">${product.price * product.qty}</TableCell>
               </TableRow>
+                )
+              })}
             </TableBody>
             <TableFooter>
               <TableRow>
                 <TableCell colSpan={3}>Total:</TableCell>
-                <TableCell align="right">$XX.XX</TableCell>
+                {/* <TableCell align="right">$XX.XX</TableCell> */}
+                {/* total price Yet to be added */}
               </TableRow>
             </TableFooter>
           </Table>
@@ -90,9 +93,6 @@ const RightSideBar = () => {
           Checkout
         </Button>
       </main>
-      <footer className={classes.footer}>
-        <p>&copy; Yourwebsite</p>
-      </footer>
     </div>
   );
 };

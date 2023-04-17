@@ -2,30 +2,34 @@ import "./App.css";
 import Navigation from "./Components/Navigation.tsx";
 import Products from "./Components/Products.tsx";
 import Cart from "./Components/Cart.tsx";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import SingleProduct from "./Components/SingleProduct.tsx";
+
+import { BrowserRouter, Routes, Route, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+
 import data from "./data.json";
-import Product from "./Components/Product.tsx";
 
 function App() {
   const [products, setProducts] = useState([]);
 
+  const {id} = useParams()
+
   useEffect(() => {
     setProducts(data.products);
-  }, [products]);
+  }, []);
 
   return (
     <BrowserRouter>
+      <Navigation products={products} setProducts={setProducts}/>,
       <Routes>
         <Route
           path="/"
           element={[
-            <Navigation products={products} setProducts={setProducts}/>,
             <Products products={products} setProducts={setProducts}/>,
           ]}
         />
         <Route path="cart" element={<Cart/>}/>
-        <Route path="product" element={<Product/>}/>
+        <Route path='singleproduct/:id' element={<SingleProduct/>}/>
       </Routes>
     </BrowserRouter>
   );
