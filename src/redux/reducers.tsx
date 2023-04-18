@@ -7,5 +7,5 @@ const rootReducer = combineReducers({
     addItem,
     removeItem
 });
-
+    
 export default rootReducer;

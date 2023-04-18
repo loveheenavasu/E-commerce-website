@@ -1,18 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const counterSlice = createSlice({
   name: "cart",
   initialState: [],
   reducers: {
     addItem: (state, action) => {
-      console.log("Current state:", JSON.stringify(state));
-      const addedItem = action.payload;
-
-      let itemExists = state.find((item) => item.id == addedItem.id);
-
+      const actionPayload = action.payload;
+      let itemExists = state.find((item) => item.id == actionPayload.id);
       if (itemExists) {
         const updatedItems = state.map((item) => {
-          if (item.id === addedItem.id) {
+          if (item.id === actionPayload.id) {
             return { ...item, qty: item.qty + 1 };
           }
           return item;
@@ -24,11 +24,12 @@ const counterSlice = createSlice({
         return state;
       }
     },
-
+    
     removeItem: (state,action) => {
-        let itemExists = state.find((item) => item.id == addedItem.id);
+        const actionPayload = action.payload;
+        let itemExists = state.find((item) => item.id == actionPayload.id);
         if(itemExists){
-          let updatedItemArray = state.filter((item)=> item.id != addItem.id) 
+          let updatedItemArray = state.filter((item)=> item.id != actionPayload.id) 
           return updatedItemArray;
         }
         return state

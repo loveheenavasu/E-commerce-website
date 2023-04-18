@@ -12,6 +12,7 @@ import {
   Button,
   TableFooter,
 } from "@material-ui/core";
+import RootState from '../redux/reducers.tsx'
 import { useSelector } from 'react-redux';
 
 
@@ -24,10 +25,11 @@ const RightSideBar = () => {
           flexDirection: "column",
           minHeight: "100vh",
         },
-        header: {
-          backgroundColor: "#1976d2",
+        header: {          
           color: "#ff423",
-          padding: "5px",
+      
+      
+        padding: "5px",
         },
         main: {
           flex: "1",
@@ -44,9 +46,11 @@ const RightSideBar = () => {
   const classes = useStyles();
 
 
-  const allProducts = useSelector((state)=>state.addItem)
 
-  console.log(allProducts,"allproducts")
+  const allProducts = useSelector((state: RootState) => state.addItem);
+
+
+
 
   return (
     <div className={classes.root}>

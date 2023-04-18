@@ -15,6 +15,8 @@ import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { addItem } from "../redux/cartSlice.tsx";
 import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
+
 
 const SingleProduct = () => {
   const location = useLocation();
@@ -38,10 +40,16 @@ const SingleProduct = () => {
 
   const product = location.state.prdct;
 
-  console.log(product, "productproduct");
   const classes = useStyles();
 
   const dispatch = useDispatch();
+
+  const handleActionDispatch =() =>{
+   let variable = dispatch(addItem(product))
+   if(variable.payload){
+     toast.success("Item added to your cart")
+   }
+  }
 
   return (
     <div>
@@ -87,7 +95,7 @@ const SingleProduct = () => {
           <Button
             variant="contained"
             color="primary"
-            onClick={() => dispatch(addItem(product))}
+            onClick={() => handleActionDispatch()}
           >
             Add to cart
           </Button>

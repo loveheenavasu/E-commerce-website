@@ -10,10 +10,10 @@ import InputBase from "@mui/material/InputBase";
 import Badge from "@mui/material/Badge";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
-import SearchIcon from "@mui/icons-material/Search";
-import AccountCircle from "@mui/icons-material/AccountCircle";
+import { RootState } from '../store/types';
+import SearchIcon from '@material-ui/icons/Search';
 import MoreIcon from "@mui/icons-material/MoreVert";
-import {useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import data from "../data.json";
 import { useSelector } from "react-redux";
 
@@ -61,68 +61,45 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 export default function Navigation({ setProducts }) {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
-  
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState<null | HTMLElement>(null);
-
-  const isMenuOpen = Boolean(anchorEl);
-
-  const cartItems = useSelector((state)=> state.addItem)
+const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState<null | HTMLElement>(null);
 
 
+
+  const cartItems = useSelector((state: RootState) => state.addItem);
 
   const navigate = useNavigate();
   const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleMobileMenuClose = () => {
-    setMobileMoreAnchorEl(null);
-  };
+ 
 
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-    handleMobileMenuClose();
-  };
-
+  
  const handleCartNavigate = () =>{
    navigate('cart')
  }
 
-  const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
-    setMobileMoreAnchorEl(event.currentTarget);
-  };
+
 
   const handleChange = (e) => {
     let filteredProducts = data.products.filter((prodct) =>
-      prodct.title.includes(e.target.value)
+      prodct.title.toLowerCase().includes(e.target.value.toLowerCase())
     );
     setProducts(filteredProducts);
   };
 
-  const menuId = "primary-search-account-menu";
-  const renderMenu = (
-    <Menu
-      anchorEl={anchorEl}
-      anchorOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
-      id={menuId}
-      keepMounted
-      transformOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
-      open={isMenuOpen}
-      onClose={handleMenuClose}
-    >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My Account</MenuItem>
-    </Menu>
-  );
 
   return (
-    <Box sx={{ flexGrow: 1 }} style={{ position: "sticky", top: 0, zIndex: 1 }}>
+    <Box
+      sx={{ flexGrow: 1 }}
+      style={{
+        position: "sticky",
+        top: 0,
+        zIndex: 1,
+        WebkitBackdropFilter: "blur(8px)",
+        backdropFilter: "blur(8px)",
+      }}
+    >
       <AppBar position="static">
         <Toolbar>
           <Typography
@@ -131,11 +108,11 @@ export default function Navigation({ setProducts }) {
             component="div"
             sx={{ display: { xs: "none", sm: "block" } }}
           >
-            E-Store.com
+            E-Store.Com
           </Typography>
           <Search>
             <SearchIconWrapper>
-              <SearchIcon />
+              <SearchIcon/>
             </SearchIconWrapper>
             <StyledInputBase
               placeholder="Search Products.."
@@ -149,32 +126,11 @@ export default function Navigation({ setProducts }) {
               size="large"
               aria-label="show 4 new mails"
               color="inherit"
-              onClick={()=>handleCartNavigate()}
+              onClick={() => handleCartNavigate()}
             >
               <Badge badgeContent={cartItems?.length} color="error">
-                  <ShoppingCartIcon />
+                <ShoppingCartIcon />
               </Badge>
-            </IconButton>
-            <IconButton
-              size="large"
-              edge="end"
-              aria-label="account of current user"
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-            >
-              <AccountCircle />
-            </IconButton>
-          </Box>
-          <Box sx={{ display: { xs: "flex", md: "none" } }}>
-            <IconButton
-              size="large"
-              aria-label="show more"
-              aria-haspopup="true"
-              onClick={handleMobileMenuOpen}
-              color="inherit"
-            >
-              <MoreIcon />
             </IconButton>
           </Box>
         </Toolbar>

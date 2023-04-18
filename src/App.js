@@ -8,6 +8,7 @@ import { BrowserRouter, Routes, Route, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 import data from "./data.json";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   const [products, setProducts] = useState([]);
@@ -20,7 +21,8 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Navigation products={products} setProducts={setProducts}/>,
+      <ToastContainer />
+      <Navigation setProducts={setProducts}/>
       <Routes>
         <Route
           path="/"

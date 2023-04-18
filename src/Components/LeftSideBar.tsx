@@ -1,23 +1,14 @@
 import React from "react";
 import {
-  Card,
-  Box,
-  CardContent,
-  CardMedia,
-  IconButton,
-  Typography,
-  Button,
-  TextField,
-  Grid,
+  Box,  Typography,
+Button,
 } from "@material-ui/core";
-import DeleteIcon from "@material-ui/icons/Delete";
-import AddIcon from "@material-ui/icons/Add";
-import RemoveIcon from "@material-ui/icons/Remove";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import Rating from "@material-ui/lab/Rating";
 import RemoveShoppingCartIcon from "@material-ui/icons/RemoveShoppingCart";
-import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
+import { removeItem } from "../redux/cartSlice.tsx";
+import { toast } from "react-toastify";
 
 const LeftSideBar = () => {
   const useStyles = makeStyles((theme) => ({
@@ -34,22 +25,22 @@ const LeftSideBar = () => {
       width:"10vw",
     },
     productDetailsBox: {
-    //   flexGrow: 1,
+        flexGrow: 1,
     },
   }));
 
+  const dispatch = useDispatch();
+
   const classes = useStyles();
 
-  const cartItemsArray = useSelector((state) => state.addItem);
+  const cartItemsArray = useSelector((state:rootState) => state.addItem);
 
-
-  const handleRemoveProduct =() =>{
-    console.log("productisremoved")
-  }
-
-  const handleAddProduct = () =>{
-    console.log("handleAddProduct")
-  }
+  const handleRemoveProduct = (product) => {
+    let varialble = dispatch(removeItem(product)) 
+    if(varialble.payload){
+      toast.success("Item removed from cart")
+    }
+  };
 
   return (
     <div className="leftBar" style={{ width: "60%", margin: 5 }}>
@@ -66,7 +57,9 @@ const LeftSideBar = () => {
               </Box>
               <Box className={classes.productDetailsBox}>
                 <Typography variant="h6">{product.title}</Typography>
-                <Typography variant="body1">{product.description.substring(0, 50)}...</Typography>
+                <Typography variant="body1">
+                  {product.description.substring(0, 50)}...
+                </Typography>
                 <Rating
                   name="product-rating"
                   value={product.rating}
@@ -103,26 +96,22 @@ const LeftSideBar = () => {
                 <Typography variant="body2" color="textSecondary" component="p">
                   In stock: {product.stock}
                 </Typography>
-                <Box mt={2}>
-                  <IconButton
-                    aria-label="remove from cart"
-                    onClick={() => handleRemoveProduct(product)}
+                <Box mt={3} mb={2}>
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    endIcon={<RemoveShoppingCartIcon />}
+                    onClick={()=>handleRemoveProduct(product)}
                   >
-                    <RemoveShoppingCartIcon />
-                  </IconButton>
+                    Remove Item
+                  </Button>
                   <Typography
                     variant="h6"
                     component="span"
                     style={{ margin: "0 1rem" }}
                   >
-                    {product.quantity}
+                    {product.qty}
                   </Typography>
-                  <IconButton
-                    aria-label="add to cart"
-                    onClick={() => handleAddProduct(product)}
-                  >
-                    <AddShoppingCartIcon />
-                  </IconButton>
                 </Box>
               </Box>
             </Box>
