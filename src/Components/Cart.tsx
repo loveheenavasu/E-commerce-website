@@ -14,17 +14,21 @@ const Cart = () => {
           <RightSideBar />
         </>
       ) : (
-        <h1
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            height: "100vh",
-            width: "100vw",
-          }}
-        >
-          Your Cart is Empty
+        <div style={{
+          display: "flex",
+          flexDirection:"column",
+          alignItems: "center",
+          justifyContent: "center",
+          height: "100vh",
+          width: "100vw",
+        }}>
+        <div>
+        <img src="https://cdni.iconscout.com/illustration/premium/thumb/empty-cart-5521508-4610092.png"/>
+        </div>
+        <h1>
+          Your Cart is Empty !!
         </h1>
+        </div>
       )}
     </div>
   );

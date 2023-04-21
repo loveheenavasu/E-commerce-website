@@ -6,6 +6,40 @@
   height: 40vmin;
   pointer-events: none;
 }
+.pagination-root {
+  display: flex;
+  justify-content: center;
+  margin: 12px;
+  margin-top: 15px;
+}
+
+.pagination-list {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pagination-item {
+  margin: 4px;
+  border-radius: 4px;
+  padding: 8px;
+  background-color: #f0f0f0;
+  color: #333;
+  cursor: pointer;
+}
+
+.pagination-selected {
+  background-color: #333;
+  color: #fff;
+}
+
+
+
+
+
+
+
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {

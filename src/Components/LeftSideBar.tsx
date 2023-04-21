@@ -1,14 +1,14 @@
 import React from "react";
-import {
-  Box,  Typography,
-Button,
-} from "@material-ui/core";
+import { Box, Typography, Button, IconButton,TextField } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import Rating from "@material-ui/lab/Rating";
 import RemoveShoppingCartIcon from "@material-ui/icons/RemoveShoppingCart";
-import { removeItem } from "../redux/cartSlice.tsx";
+import { removeItem ,increQty,decreQty} from "../redux/cartSlice.tsx";
 import { toast } from "react-toastify";
+import AddIcon from '@material-ui/icons/Add';
+import RemoveIcon from '@material-ui/icons/Remove';
+
 
 const LeftSideBar = () => {
   const useStyles = makeStyles((theme) => ({
@@ -17,15 +17,31 @@ const LeftSideBar = () => {
       alignItems: "center",
       border: "1px solid #e0e0e0",
       borderRadius: theme.shape.borderRadius,
+      marginBottom:"18px",
+      marginTop:"12px",
+      transition: 'transform 0.4s',
+      "&:hover": {
+        cursor: "pointer",
+        transform: 'scale(1.05)',
+      },
     },
     productImageBox: {
       width: "40%",
+      margin:"12px",
     },
     productImage: {
-      width:"10vw",
+      width: "10vw",
     },
     productDetailsBox: {
-        flexGrow: 1,
+      flexGrow: 1,
+    },
+    button: {
+      minWidth: 'unset',
+      padding: theme.spacing(0.5),
+    },
+    input: {
+      width: 50,
+      textAlign: "center",
     },
   }));
 
@@ -33,17 +49,24 @@ const LeftSideBar = () => {
 
   const classes = useStyles();
 
-  const cartItemsArray = useSelector((state:rootState) => state.addItem);
+  const cartItemsArray = useSelector((state: rootState) => state.addItem);
 
   const handleRemoveProduct = (product) => {
-    let varialble = dispatch(removeItem(product)) 
-    if(varialble.payload){
-      toast.success("Item removed from cart")
+    let varialble = dispatch(removeItem(product));
+    if (varialble.payload) {
+      toast.success("Item removed from cart");
     }
   };
 
+  const handleIncrementQty = (product) => {
+    dispatch(increQty(product))
+  }
+  const handleDecrementQty = (product) => {
+    dispatch(decreQty(product))
+  }
+
   return (
-    <div className="leftBar" style={{ width: "60%", margin: 5 }}>
+    <div className="leftBar" style={{ width: "60%", margin: 20}}>
       {cartItemsArray.map((product) => {
         return (
           <>
@@ -96,22 +119,26 @@ const LeftSideBar = () => {
                 <Typography variant="body2" color="textSecondary" component="p">
                   In stock: {product.stock}
                 </Typography>
+                <IconButton className={classes.button} onClick={()=>handleDecrementQty(product)}>
+                  <RemoveIcon />
+                </IconButton>
+                <TextField
+                type="number"
+                value={product.qty}
+                className={classes.input}
+                />
+                <IconButton className={classes.button} onClick={()=>handleIncrementQty(product)}>
+                <AddIcon />
+                </IconButton>
                 <Box mt={3} mb={2}>
                   <Button
                     variant="contained"
                     color="secondary"
                     endIcon={<RemoveShoppingCartIcon />}
-                    onClick={()=>handleRemoveProduct(product)}
+                    onClick={() => handleRemoveProduct(product)}
                   >
                     Remove Item
                   </Button>
-                  <Typography
-                    variant="h6"
-                    component="span"
-                    style={{ margin: "0 1rem" }}
-                  >
-                    {product.qty}
-                  </Typography>
                 </Box>
               </Box>
             </Box>

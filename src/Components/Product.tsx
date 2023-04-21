@@ -18,7 +18,12 @@ const useStyles = makeStyles((theme) => ({
   },
   cardActionArea: {
     height: "90%",
-  },
+    transition: 'transform 0.3s ease-in-out',
+    '&:hover': {
+      backgroundColor:"#FAFAFA",
+      transform: 'scale(1.05)',
+    },
+  }
 }));
 
 export default function Product({ title, description, thumbnail, id, prdct }) {
@@ -53,10 +58,10 @@ export default function Product({ title, description, thumbnail, id, prdct }) {
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
-            {title}
+            {title.substring(0, 12)}...
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            {description}
+            {description.substring(0, 45)}
           </Typography>
         </CardContent>
       </CardActionArea>
@@ -66,13 +71,13 @@ export default function Product({ title, description, thumbnail, id, prdct }) {
           color="warning"
           onClick={() => handleActionDispatch()}
           endIcon={<AddShoppingCartIcon/>}
+          style={{marginBottom:"30%"}}
         >
           Add item
         </Button>
-        <Button variant="outlined" color="info">
+        <Button style={{marginBottom:"30%"}} variant="outlined" color="info">
           Buy Now
         </Button>
-        {/* Proceed to payment  to be added */}
       </CardActions>
     </Card>
   );

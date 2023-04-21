@@ -1,140 +1,74 @@
-import React, { useState } from "react";
-import { styled, alpha } from "@mui/material/styles";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
+import React from "react";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import InputBase from "@mui/material/InputBase";
 import Badge from "@mui/material/Badge";
-import MenuItem from "@mui/material/MenuItem";
-import Menu from "@mui/material/Menu";
-import { RootState } from '../store/types';
-import SearchIcon from '@material-ui/icons/Search';
-import MoreIcon from "@mui/icons-material/MoreVert";
 import { useNavigate } from "react-router-dom";
-import data from "../data.json";
 import { useSelector } from "react-redux";
 
-const Search = styled("div")(({ theme }) => ({
-  position: "relative",
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
-  "&:hover": {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
-  },
-  marginRight: theme.spacing(2),
-  marginLeft: 0,
-  width: "100%",
-  [theme.breakpoints.up("sm")]: {
-    marginLeft: theme.spacing(3),
-    width: "auto",
-  },
-}));
 
+export default function Navigation() {
 
-
-const SearchIconWrapper = styled("div")(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: "100%",
-  position: "absolute",
-  pointerEvents: "none",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: "inherit",
-  "& .MuiInputBase-input": {
-    padding: theme.spacing(1, 1, 1, 0),
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create("width"),
-    width: "100%",
-    [theme.breakpoints.up("md")]: {
-      width: "20ch",
-    },
-  },
-}));
-
-export default function Navigation({ setProducts }) {
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-
-const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState<null | HTMLElement>(null);
-
-
-
-  const cartItems = useSelector((state: RootState) => state.addItem);
-
+  const cartItems = useSelector((state) => state.addItem);
   const navigate = useNavigate();
-  const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-
- 
-
   
- const handleCartNavigate = () =>{
+  
+  const handleCartNavigate = () =>{
    navigate('cart')
- }
+  }
 
-
-
-  const handleChange = (e) => {
-    let filteredProducts = data.products.filter((prodct) =>
-      prodct.title.toLowerCase().includes(e.target.value.toLowerCase())
-    );
-    setProducts(filteredProducts);
-  };
 
 
   return (
-    <Box
-      sx={{ flexGrow: 1 }}
+<div
       style={{
+        flexGrow: 1,
         position: "sticky",
         top: 0,
         zIndex: 1,
         WebkitBackdropFilter: "blur(8px)",
         backdropFilter: "blur(8px)",
+        display: "flex",
+        alignItems: "center",
+        padding: "10px",
+        backgroundColor: "#f2f2f2",
+        boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.3)",
       }}
     >
-      <AppBar position="static">
-        <Toolbar>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ display: { xs: "none", sm: "block" } }}
+      <img
+        src="https://t3.ftcdn.net/jpg/02/47/48/00/360_F_247480017_ST4hotATsrcErAja0VzdUsrrVBMIcE4u.jpg"
+        alt="E-Store.Com logo"
+        style={{ height: "50px", marginRight: "20px" }}
+      />
+      <Typography variant="h6" noWrap>
+        E-Store.Com
+      </Typography>
+      <ul
+        style={{
+          display: "flex",
+          listStyleType: "none",
+          margin: 0,
+          padding: 0,
+          marginLeft: "auto",
+        }}
+      >
+        <li style={{margin:"12px"}}>Home</li>
+        <li style={{margin:"12px"}}>About us</li>
+        <li style={{margin:"12px"}}>Contact us</li>
+        <li style={{margin:"12px"}}>Cart</li>
+        <div style={{ marginLeft: "auto", display: "flex" }}>
+          <IconButton
+            size="large"
+            aria-label="show 4 new mails"
+            color="inherit"
+            onClick={() => handleCartNavigate()}
           >
-            E-Store.Com
-          </Typography>
-          <Search>
-            <SearchIconWrapper>
-              <SearchIcon/>
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="Search Products.."
-              onChange={(e) => handleChange(e)}
-              inputProps={{ "aria-label": "search" }}
-            />
-          </Search>
-          <Box sx={{ flexGrow: 1 }} />
-          <Box sx={{ display: { xs: "none", md: "flex" } }}>
-            <IconButton
-              size="large"
-              aria-label="show 4 new mails"
-              color="inherit"
-              onClick={() => handleCartNavigate()}
-            >
-              <Badge badgeContent={cartItems?.length} color="error">
-                <ShoppingCartIcon />
-              </Badge>
-            </IconButton>
-          </Box>
-        </Toolbar>
-      </AppBar>
-    </Box>
+            <Badge badgeContent={cartItems.length} color="error" style={{marginBottom:"12"}}>
+              <ShoppingCartIcon />
+            </Badge>
+          </IconButton>
+        </div>
+      </ul>
+    </div>
   );
 }
