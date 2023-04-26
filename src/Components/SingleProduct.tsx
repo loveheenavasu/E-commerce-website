@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
 import Rating from "@material-ui/lab/Rating";
 import { addItem } from "../redux/cartSlice.tsx";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import { Button } from "@material-ui/core";
+import DoneIcon from '@mui/icons-material/Done';
+
 
 const SingleProduct = () => {
   const location = useLocation();
@@ -65,7 +68,7 @@ const SingleProduct = () => {
               style={{ marginTop: "10px" }}
             />
             <div style={{ marginTop: "20px" }}>
-              <button
+            {!product.qty && <Button
                 style={{
                   padding: "10px",
                   background: "red",
@@ -74,9 +77,24 @@ const SingleProduct = () => {
                   cursor: "pointer",
                 }}
                 onClick={handleActionDispatch}
+                endIcon={<ShoppingCartIcon/>}
               >
-                Add To Cart <ShoppingCartIcon style={{ marginLeft: "5px" }} />
-              </button>
+                Add To Cart 
+              </Button>}
+              {
+                 product.qty &&<Button
+                 style={{
+                   padding: "10px",
+                   background: "red",
+                   color: "white",
+                   border: "none",
+                   cursor: "pointer",
+                 }}
+                 endIcon={<DoneIcon/>}
+               >
+                 Added 
+               </Button>
+              }
             </div>
           </div>
         </div>

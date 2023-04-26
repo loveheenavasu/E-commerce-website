@@ -83,7 +83,7 @@ const RightSideBar = () => {
   let totalPrice = totalCartPrice()
 
   return (
-    <div className={classes.root}>
+    allProducts.length && <div className={classes.root}>
       <main className={classes.main}>
         <TableContainer component={Paper}>
           <Table className={classes.table}>
@@ -98,7 +98,7 @@ const RightSideBar = () => {
             <TableBody>
               {allProducts.map((product)=>{
                 return (
-                <TableRow>
+                  !product.isPurchase && <TableRow>
                 <TableCell>{product.title}</TableCell>
                 <TableCell align="right">${product.price}</TableCell>
                 <TableCell align="right">{product.qty}</TableCell>
@@ -109,7 +109,7 @@ const RightSideBar = () => {
             </TableBody>
             <TableFooter className={classes.tableFooter}>
               <TableRow >
-                <TableCell colSpan={3} className={classes.tableCell}>Total: </TableCell>
+                <TableCell colSpan={3} className={classes.tableCell}>Total:</TableCell>
                 <TableCell align="right" className={classes.tableCell}>${totalPrice}</TableCell>
               </TableRow>
             </TableFooter>
@@ -120,9 +120,8 @@ const RightSideBar = () => {
           color="primary"
           className={classes.checkoutButton}
           onClick={()=>handleModal()}
-          endIcon={<PaymentIcon/>}
          >
-          Checkout
+          Place order({allProducts.length}-items)
         </Button>
       </main>
       <UserModal setIsModalOpen={setIsModalOpen} isModalOpen={isModalOpen} />

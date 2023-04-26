@@ -1,13 +1,15 @@
 import React from "react";
-import { Box, Typography, Button, IconButton,TextField } from "@material-ui/core";
+import { Box, Typography, Button, IconButton,TextField} from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import Rating from "@material-ui/lab/Rating";
 import RemoveShoppingCartIcon from "@material-ui/icons/RemoveShoppingCart";
 import { removeItem ,increQty,decreQty} from "../redux/cartSlice.tsx";
+import { purchaseItem } from "../redux/productSlice.tsx";
 import { toast } from "react-toastify";
 import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
+
 
 
 const LeftSideBar = () => {
@@ -40,7 +42,7 @@ const LeftSideBar = () => {
       padding: theme.spacing(0.5),
     },
     input: {
-      width: 50,
+      width: 20,
       textAlign: "center",
     },
   }));
@@ -58,6 +60,13 @@ const LeftSideBar = () => {
     }
   };
 
+
+
+  const handlePurchase = (product) =>{
+    console.log(product,"productproduct")
+    dispatch(purchaseItem(product))
+  }
+
   const handleIncrementQty = (product) => {
     dispatch(increQty(product))
   }
@@ -70,7 +79,7 @@ const LeftSideBar = () => {
       {cartItemsArray.map((product) => {
         return (
           <>
-            <Box className={classes.productBox}>
+              {!product.isPurchase && <Box className={classes.productBox}>
               <Box className={classes.productImageBox}>
                 <img
                   src={product.thumbnail}
@@ -123,7 +132,7 @@ const LeftSideBar = () => {
                   <RemoveIcon />
                 </IconButton>
                 <TextField
-                type="number"
+                type="text"
                 value={product.qty}
                 className={classes.input}
                 />
@@ -134,6 +143,7 @@ const LeftSideBar = () => {
                   <Button
                     variant="contained"
                     color="secondary"
+                    style={{marginRight:"5px"}}
                     endIcon={<RemoveShoppingCartIcon />}
                     onClick={() => handleRemoveProduct(product)}
                   >
@@ -141,7 +151,7 @@ const LeftSideBar = () => {
                   </Button>
                 </Box>
               </Box>
-            </Box>
+            </Box>}
           </>
         );
       })}

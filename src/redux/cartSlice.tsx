@@ -35,24 +35,34 @@ const cartSlice = createSlice({
       return updatedItems;
     },
 
+
     increQty: (state, action: PayloadAction<Item>) => {
       const item = action.payload;
-      return state.map((i) => (i.id === item.id ? { ...i, qty: i.qty + 1 } : i));
+      const index = state.findIndex((i) => i.id === item.id);
+      if (index !== -1) {
+        state[index].qty += 1;
+      }
     },
 
     decreQty: (state, action: PayloadAction<Item>) => {
       const item = action.payload;
-      const itemExists = state.find((i) => i.id === item.id);
-      if (itemExists && item.qty === 1) {
-        const updatedItems = state.filter((i) => i.id !== item.id);
-        return updatedItems;
+      const itemIndex = state.findIndex((i) => i.id === item.id);
+    
+      if (itemIndex !== -1 && item.qty === 1) {
+        state.splice(itemIndex, 1);
       } else {
-       return state.map((i) => (i.id === item.id ? { ...i, qty: i.qty - 1 } : i));
+        state[itemIndex].qty--;
       }
     },
+    
   },
 });
 
+
+
 export const { addItem, removeItem, increQty, decreQty } = cartSlice.actions;
 
+
 export default cartSlice.reducer;
+
+

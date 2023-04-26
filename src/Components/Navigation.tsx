@@ -3,24 +3,19 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Badge from "@mui/material/Badge";
-import { useNavigate } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-
 export default function Navigation() {
-
   const cartItems = useSelector((state) => state.addItem);
   const navigate = useNavigate();
-  
-  
-  const handleCartNavigate = () =>{
-   navigate('cart')
-  }
 
-
+  const handleCartNavigate = () => {
+    navigate("cart");
+  };
 
   return (
-<div
+    <div
       style={{
         flexGrow: 1,
         position: "sticky",
@@ -52,10 +47,18 @@ export default function Navigation() {
           marginLeft: "auto",
         }}
       >
-        <li style={{margin:"12px"}}>Home</li>
-        <li style={{margin:"12px"}}>About us</li>
-        <li style={{margin:"12px"}}>Contact us</li>
-        <li style={{margin:"12px"}}>Cart</li>
+        <Link style={{ margin: "12px", textDecoration: "none",color:"black"}} to="/">
+         Home
+        </Link>
+        <Link style={{ margin: "12px", textDecoration: "none",color:"black"}} to="/">
+         About us
+        </Link>
+        <Link style={{ margin: "12px", textDecoration: "none",color:"black"}} to="/">
+         Contact us
+        </Link>
+        <Link style={{ margin: "12px", textDecoration: "none",color:"black"}} to="addressparent/payment/orders">
+         My Orders
+        </Link>
         <div style={{ marginLeft: "auto", display: "flex" }}>
           <IconButton
             size="large"
@@ -63,7 +66,11 @@ export default function Navigation() {
             color="inherit"
             onClick={() => handleCartNavigate()}
           >
-            <Badge badgeContent={cartItems.length} color="error" style={{marginBottom:"12"}}>
+            <Badge
+              badgeContent={cartItems.length}
+              color="error"
+              style={{ marginBottom: "12" }}
+            >
               <ShoppingCartIcon />
             </Badge>
           </IconButton>

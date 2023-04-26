@@ -12,6 +12,10 @@ import {Pagination } from "@mui/material";
 import usePagination from "./Pagination/pagination.tsx";
 import UserModal from "./Components/Modal.tsx";
 import Footer from "./Components/Footer.tsx";
+import Orders from "./Components/Orders.tsx";
+import Addressparent from "./Components/Addressparent.tsx";
+import PaymentPage from "./Components/Payment.tsx";
+
 
 function App() {
   const [products, setProducts] = useState([]);
@@ -61,6 +65,9 @@ function App() {
         <Route path="cart" element={<Cart/>} />
         <Route path="singleproduct/:id" element={<SingleProduct/>}/>
         <Route path="modal" element={<UserModal/>}/> 
+        <Route path="addressparent" element={<Addressparent/>}/> 
+        <Route path="addressparent/payment" element={<PaymentPage/>}/> 
+        <Route path="addressparent/payment/orders" element={<Orders/>}/>  
       </Routes>
     </BrowserRouter>
   );

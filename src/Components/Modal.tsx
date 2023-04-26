@@ -7,11 +7,12 @@ import {
   Typography,
   InputAdornment,
 } from "@material-ui/core";
-import PaymentIcon from "@material-ui/icons/Payment";
 import EmailIcon from "@material-ui/icons/Email";
 import { useNavigate } from 'react-router-dom';
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import { toast } from "react-toastify";
+import CallIcon from '@mui/icons-material/Call';
+
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -62,7 +63,7 @@ const UserModal = ({setIsModalOpen,isModalOpen}) => {
         return;
     }
     handleClose();
-    navigate('/');
+    navigate('/addressparent');
   };
 
   const body = (
@@ -95,6 +96,29 @@ const UserModal = ({setIsModalOpen,isModalOpen}) => {
           value={fullName}
           onChange={(e) => setFullName(e.target.value)}
           fullWidth
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <AccountCircleIcon/>
+              </InputAdornment>
+            ),
+          }}
+        />
+        <TextField
+          id="cardNumber"
+          label="Phone Number"
+          variant="outlined"
+          className={classes.input}
+          value={cardNumber}
+          onChange={(e) => setCardNumber(e.target.value)}
+          fullWidth
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+              <CallIcon/>
+              </InputAdornment>
+            ),
+          }}
         />
         <TextField
           id="email"
@@ -108,22 +132,6 @@ const UserModal = ({setIsModalOpen,isModalOpen}) => {
             startAdornment: (
               <InputAdornment position="start">
                 <EmailIcon />
-              </InputAdornment>
-            ),
-          }}
-        />
-        <TextField
-          id="cardNumber"
-          label="Card Number"
-          variant="outlined"
-          className={classes.input}
-          value={cardNumber}
-          onChange={(e) => setCardNumber(e.target.value)}
-          fullWidth
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <PaymentIcon />
               </InputAdornment>
             ),
           }}
